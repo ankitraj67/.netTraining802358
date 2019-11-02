@@ -103,9 +103,40 @@ namespace V3_Movie_MVC_RepoPattern_Ef_CodeFirst_Identity.Data
             return false;
         }
 
-        public bool EditMovie(Movie movie)
+        public bool EditMovie(MovieViewModel movieViewModel)
         {
-            throw new NotImplementedException();
+            try
+            {
+                context.Entry<Movie>(movieViewModel.Movie).State =
+                Microsoft.EntityFrameworkCore.EntityState.Modified;
+
+                foreach (var actor in movieViewModel.Actors)
+                {
+                    var existingActor = context.Actors.Find(
+                            Convert.ToInt32(actor.Value));
+                    if (actor.Selected)
+                    {
+                        
+                        existingActor.Movie = movieViewModel.Movie;
+                        
+                    }
+                    else
+                    {
+                        
+                        existingActor.Movie = null;
+                    }
+                    context.SaveChanges();
+                }
+                context.SaveChanges();
+
+                return true;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public IEnumerable<Actor> GetActorByGender(Gender gender)
@@ -159,7 +190,15 @@ namespace V3_Movie_MVC_RepoPattern_Ef_CodeFirst_Identity.Data
 
         public Movie GetMovieById(int movieId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return context.Movies.Find(movieId);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public IEnumerable<Movie> GetMovies()

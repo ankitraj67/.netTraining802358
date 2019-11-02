@@ -79,23 +79,56 @@ namespace V3_Movie_MVC_RepoPattern_Ef_CodeFirst_Identity.Controllers
         // GET: Movies/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var movie = repository.GetMovieById(id);
+            if (movie == null)
+            {
+                return NotFound();
+            }
+            var viewModel = new MovieViewModel
+            {
+                Movie = movie,
+                Actors = repository.GetActors().Select(a =>
+                new SelectListItem(a.Name, a.Id.ToString(),a.Movie?.Id ==movie.Id ? true :false)).ToList()
+            };
+            return View(viewModel);
         }
 
         // POST: Movies/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, MovieViewModel viewModel)
         {
+           
             try
             {
                 // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid && id == viewModel.Movie.Id)
+                {
+                    bool result = repository.EditMovie(viewModel);
+                    if (result)
+                    {
+                        return RedirectToAction(nameof(Index));
+                    }
+                }
+                var movie = repository.GetMovieById(id);
+                viewModel = new MovieViewModel
+                {
+                    Movie = movie,
+                    Actors = repository.GetActors().Select(a => new SelectListItem(a.Name, 
+                    a.Id.ToString(), a.Movie?.Id == movie.Id ? true : false)).ToList()
+                };
+                return View(viewModel);
             }
             catch
             {
-                return View();
+                var movie = repository.GetMovieById(id);
+                viewModel = new MovieViewModel
+                {
+                    Movie = movie,
+                    Actors = repository.GetActors().Select(a => new SelectListItem(a.Name,
+                    a.Id.ToString(), a.Movie?.Id == movie.Id ? true : false)).ToList()
+                };
+                return View(viewModel);
             }
         }
 

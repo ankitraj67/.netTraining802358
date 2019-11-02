@@ -141,3 +141,4 @@ C:\Users\HP\source\repos\Ems.Net\V3_Movie_MVC_RepoPattern_Ef_CodeFirst_Identity\
 C:\Users\HP\source\repos\Ems.Net\V3_Movie_MVC_RepoPattern_Ef_CodeFirst_Identity\obj\Debug\netcoreapp3.0\Razor\Views\Actors\Delete.cshtml.g.cs
 C:\Users\HP\source\repos\Ems.Net\V3_Movie_MVC_RepoPattern_Ef_CodeFirst_Identity\obj\Debug\netcoreapp3.0\Razor\Views\Actors\GetActorsByGender.cshtml.g.cs
 C:\Users\HP\source\repos\Ems.Net\V3_Movie_MVC_RepoPattern_Ef_CodeFirst_Identity\obj\Debug\netcoreapp3.0\Razor\Views\Actors\GetActorsByMovie.cshtml.g.cs
+C:\Users\HP\source\repos\Ems.Net\V3_Movie_MVC_RepoPattern_Ef_CodeFirst_Identity\obj\Debug\netcoreapp3.0\Razor\Views\Movies\Edit.cshtml.g.cs

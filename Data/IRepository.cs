@@ -11,7 +11,7 @@ namespace V3_Movie_MVC_RepoPattern_Ef_CodeFirst_Identity.Data
     {
         IEnumerable<Movie> GetMovies();
         bool AddMovie(MovieViewModel movieViewModel);
-        bool EditMovie(Movie movie);
+        bool EditMovie(MovieViewModel movieViewModel);
         bool DeleteMovie(Movie movie);
         Movie GetMovieById(int movieId);
 
