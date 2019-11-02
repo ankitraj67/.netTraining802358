@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -86,10 +87,23 @@ namespace V3_Movie_MVC_RepoPattern_Ef_CodeFirst_Identity.Data
 
 
 
-        public bool DeleteMovie(Movie movie)
+        public bool DeleteMovie(int movieId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var movie = context.Movies.Include(m => m.Actors).ToList().Find(m => m.Id == movieId);
+                movie.Actors.Clear();
+                context.Movies.Remove(movie);
+                context.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
+
 
         public bool EditActor(Actor actor)
         {

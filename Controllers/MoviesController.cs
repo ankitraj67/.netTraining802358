@@ -135,7 +135,12 @@ namespace V3_Movie_MVC_RepoPattern_Ef_CodeFirst_Identity.Controllers
         // GET: Movies/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var movie = repository.GetMovieById(id);
+            if (movie == null)
+            {
+                return NotFound();
+            }
+            return View(movie);
         }
 
         // POST: Movies/Delete/5
@@ -145,13 +150,17 @@ namespace V3_Movie_MVC_RepoPattern_Ef_CodeFirst_Identity.Controllers
         {
             try
             {
-                // TODO: Add delete logic here
+                bool result= repository.DeleteMovie(id);
+                if (result)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
 
-                return RedirectToAction(nameof(Index));
+                return View(repository.GetMovieById(id));
             }
             catch
             {
-                return View();
+                return View(repository.GetMovieById(id));
             }
         }
     }
