@@ -23,6 +23,7 @@ namespace V3_Movie_MVC_RepoPattern_Ef_CodeFirst_Identity.Controllers
         public ActionResult Index()
         {
             return View(repository.GetMovies());
+            
         }
 
         // GET: Movies/Details/5
@@ -162,6 +163,25 @@ namespace V3_Movie_MVC_RepoPattern_Ef_CodeFirst_Identity.Controllers
             {
                 return View(repository.GetMovieById(id));
             }
+        }
+        public ActionResult GetMoviesByActor()
+        {
+            var viewModel = new ActorMovieViewModelcs
+            {
+                Actors = repository.GetActors().Select(m => new SelectListItem(m.Name, m.Id.ToString())).ToList()
+            };
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult GetMoviesByActor(int id)
+        {
+            var viewModel = new ActorMovieViewModelcs
+            {
+                Actors = repository.GetActors().Select(m => new SelectListItem(m.Name, m.Id.ToString())).ToList(),
+                Movies = repository.GetMoviesByActor(id)
+            };
+            return View(viewModel);
         }
     }
 }

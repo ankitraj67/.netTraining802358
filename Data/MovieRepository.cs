@@ -217,12 +217,27 @@ namespace V3_Movie_MVC_RepoPattern_Ef_CodeFirst_Identity.Data
 
         public IEnumerable<Movie> GetMovies()
         {
-            return context.Movies.ToList();
+            return context.Movies.Include(m => m.Actors);
         }
+
+
 
         public IEnumerable<Movie> GetMoviesByActor(int actorId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var movies = from m in context.Movies
+                             join a in context.Actors 
+                             on m.Id equals a.Movie.Id
+                             where a.Id == actorId
+                             select m;
+                return movies.ToList();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public IEnumerable<Movie> GetMoviesByGenre(Genre genre)
